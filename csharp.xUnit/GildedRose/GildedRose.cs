@@ -17,19 +17,27 @@ public class GildedRose
         // exemple si c'es agedbrie je fais ça, si c'est Sulfuras, etc.
         foreach (var item in Items)
         {
-            
+
             if (item.Name != "Sulfuras, Hand of Ragnaros")
             {
                 item.SellIn = item.SellIn - 1;
             }
-            
+
             // TODO strings en dur répétées => attention les TYPOS
             if (item.Name == "Aged Brie")
             {
+
+
                 if (item.Quality < 50)
                 {
-                    // Duplication incrémentation
                     item.Quality = item.Quality + 1;
+                    if (item.SellIn <0)
+                    {
+
+                        // Duplication incrémentation
+                        item.Quality = item.Quality + 1;
+
+                    }
                 }
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
@@ -38,60 +46,55 @@ public class GildedRose
                 {
                     item.Quality = 0;
                 }
-                
+
                 else if (item.Quality < 50)
                 {
                     // Duplication incrémentation
                     item.Quality = item.Quality + 1;
 
-                  
-                        // Duplication quality < 50
-                        if (item.SellIn < 10 && item.Quality < 50)
-                        {
-                            item.Quality = item.Quality + 1;
-                        }
 
-                        if (item.SellIn < 5 && item.Quality < 50)
-                        {
-                            item.Quality = item.Quality + 1;
-                        }
+                    // Duplication quality < 50
+                    if (item.SellIn < 10 && item.Quality < 50)
+                    {
+                        item.Quality = item.Quality + 1;
+                    }
 
-                       
+                    if (item.SellIn < 5 && item.Quality < 50)
+                    {
+                        item.Quality = item.Quality + 1;
+                    }
+
+
 
                 }
             }
             else if (item.Name != "Sulfuras, Hand of Ragnaros")
             {
                 // Duplication quality > 0
-                
-                
-                    if (item.Quality > 0)
-                    {
-                        // Duplication décrémentation
-                        item.Quality = item.Quality - 1;
-                    }
-                
+
+
+                if (item.Quality > 0)
+                {
+                    // Duplication décrémentation
+                    item.Quality = item.Quality - 1;
+                }
+
             }
 
-           
+
 
             if (item.SellIn < 0)
             {
                 if (item.Name == "Aged Brie")
                 {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
+
                 }
-                else
+                else if (item.Quality > 0 && item.Name != "Sulfuras, Hand of Ragnaros")
                 {
-                        if (item.Quality > 0 && item.Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            item.Quality = item.Quality - 1;
-                        }
-                    }
+                    item.Quality = item.Quality - 1;
+                }
             }
+
         }
     }
 }
