@@ -17,7 +17,7 @@ public class GildedRoseTest
     [InlineData("Aged Brie", -1, 3, -2, 5 )]
     public void ShouldUpdateQualityForDexterityVest(string name, int sellInBefore, int qualityBefore, int sellInExpected, int qualityExpected)
     {
-        IList<Item> items = new List<Item> { new Item { Name = name, SellIn = sellInBefore, Quality =qualityBefore} };
+        IList<Item> items = new List<Item> { new(name: name, sellIn: sellInBefore, quality: qualityBefore) };
         GildedRose app = new GildedRose(items);
         app.UpdateQuality();
         Assert.Equal(name, items[0].Name);
