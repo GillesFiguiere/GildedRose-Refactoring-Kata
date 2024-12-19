@@ -1,26 +1,34 @@
 ﻿using Xunit;
 using System.Collections.Generic;
 using GildedRoseKata;
+using GildedRoseKata.Items;
 
 namespace GildedRoseTests;
 
 public class GildedRoseTest
 {
-    [Theory]
-    [InlineData("+5 Dexterity Vest", 5, 3, 4, 2 )]
-    [InlineData("Aged Brie", 5, 3, 4, 4 )]
-    [InlineData("Backstage passes to a TAFKAL80ETC concert", 5, 3, 4, 6 )]
-    [InlineData("Backstage passes to a TAFKAL80ETC concert", 8, 3, 7, 5 )]
-    [InlineData("Backstage passes to a TAFKAL80ETC concert", 13, 3, 12, 4 )]
-    [InlineData("Backstage passes to a TAFKAL80ETC concert", -1, 3, -2, 0 )]
-    [InlineData("+5 Dexterity Vest", -1, 3, -2, 1 )]
-    [InlineData("Aged Brie", -1, 3, -2, 5 )]
-    public void ShouldUpdateQualityForDexterityVest(string name, int sellInBefore, int qualityBefore, int sellInExpected, int qualityExpected)
+    public static TheoryData<AbstractItem, int, int> CasDeTest => new()
     {
-        IList<Item> items = new List<Item> { new(name: name, sellIn: sellInBefore, quality: qualityBefore) };
-        GildedRose app = new GildedRose(items);
-        app.UpdateQuality();
-        Assert.Equal(name, items[0].Name);
+        { new DexterityVest(5, 3), 4, 2 },
+        { new AgedBrie(5, 3), 4, 4 },
+        { new BackstagePasses(5, 3), 4, 6 },
+        { new BackstagePasses(8, 3), 7, 5 },
+        { new BackstagePasses(13, 3), 12, 4 },
+        { new BackstagePasses(-1, 3), -2, 0 },
+        { new DexterityVest(-1, 3), -2, 1 },
+        { new AgedBrie(-1, 3), -2, 5 },
+    };
+
+    [Theory]
+    [MemberData(nameof(CasDeTest))]
+    public void ShouldUpdateQualityForDexterityVest(AbstractItem abstractItem, int sellInExpected, int qualityExpected)
+    {
+        List<AbstractItem> items = [abstractItem];
+        GildedRose app = new(items);
+        
+        app.Update();
+        
+        Assert.Equal(abstractItem.Name, items[0].Name);
         Assert.Equal(sellInExpected, items[0].SellIn);
         Assert.Equal(qualityExpected, items[0].Quality);
     }
