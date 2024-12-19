@@ -78,22 +78,18 @@ public class GildedRose
                     // Duplication décrémentation
                     item.Quality = item.Quality - 1;
                 }
+                if (item.SellIn < 0)
+                {
+                    if (item.Quality > 0)
+                    {
+                        item.Quality = item.Quality - 1;
+                    }
+                }
 
             }
 
 
 
-            if (item.SellIn < 0)
-            {
-                if (item.Name == "Aged Brie")
-                {
-
-                }
-                else if (item.Quality > 0 && item.Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    item.Quality = item.Quality - 1;
-                }
-            }
 
         }
     }
