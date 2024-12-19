@@ -17,36 +17,35 @@ public class GildedRose
         {
             if (item.Name != "Sulfuras, Hand of Ragnaros")
             {
-                item.SellIn--;
+                item.DecreaseSellIn();
             }
 
             // TODO strings en dur répétées => attention les TYPOS
             if (item.Name == "Aged Brie")
             {
                 item.IncreaseQuality();
-                if (item.SellIn < 0)
+
+                if (item.IsExpired())
                 {
                     item.IncreaseQuality();
                 }
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
-                if (item.SellIn < 0)
+                if (item.IsExpired())
                 {
-                    item.Quality = 0;
+                    item.SetQualityToLowest();
                 }
-
                 else
                 {
                     item.IncreaseQuality();
 
-
-                    if (item.SellIn < 10)
+                    if (item.WillExpireIn(10))
                     {
                         item.IncreaseQuality();
                     }
 
-                    if (item.SellIn < 5)
+                    if (item.WillExpireIn(5))
                     {
                         item.IncreaseQuality();
                     }
@@ -60,7 +59,7 @@ public class GildedRose
             {
                 item.DecreaseQuality();
 
-                if (item.SellIn < 0)
+                if (item.IsExpired())
                 {
                     item.DecreaseQuality();
                 }

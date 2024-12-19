@@ -10,15 +10,29 @@ public class Item
     {
         if (Quality > 0)
         {
-            Quality -= 1;
+            Quality--;
         }
     }
 
     public void IncreaseQuality()
     {
-        if (this.Quality < 50)
+        if (Quality < 50)
         {
-            this.Quality = this.Quality + 1;
+            Quality++;
         }
+    }
+
+    public void SetQualityToLowest()
+    {
+        Quality = 0;
+    }
+
+    public bool IsExpired() => SellIn < 0;
+
+    public bool WillExpireIn(int days) => SellIn < days;
+
+    public void DecreaseSellIn()
+    {
+        this.SellIn--;
     }
 }
