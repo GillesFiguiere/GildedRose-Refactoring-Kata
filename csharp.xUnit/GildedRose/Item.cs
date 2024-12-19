@@ -2,6 +2,9 @@
 
 public class Item
 {
+    private const int MinQuality = 0;
+    private const int MaxQuality = 50;
+    
     public string Name { get; }
     public int SellIn { get; private set; }
     public int Quality { get; private set; }
@@ -15,17 +18,35 @@ public class Item
 
     public void DecreaseQuality()
     {
-        if (Quality > 0)
-        {
-            Quality--;
-        }
+        DecreaseQualityBy(1);
     }
 
     public void IncreaseQuality()
     {
-        if (Quality < 50)
+        IncreaseQualityBy(1);
+    }
+
+    public void IncreaseQualityBy(int increment)
+    {
+        if (Quality + increment <= MaxQuality)
         {
-            Quality++;
+            Quality += increment;
+        }
+        else
+        {
+            Quality = MaxQuality;
+        }
+    }
+
+    public void DecreaseQualityBy(int decrement)
+    {
+        if (Quality - decrement >= MinQuality)
+        {
+            Quality -= decrement;
+        }
+        else
+        {
+            Quality = MinQuality;
         }
     }
 
@@ -35,6 +56,8 @@ public class Item
     }
 
     public bool IsExpired() => SellIn < 0;
+
+    public bool IsNotExpired() => !IsExpired();
 
     public bool WillExpireIn(int days) => SellIn < days;
 

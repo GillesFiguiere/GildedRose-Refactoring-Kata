@@ -15,40 +15,42 @@ public class GildedRose
     {
         foreach (var item in Items)
         {
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
-            {
-                item.DecreaseSellIn();
-            }
-
             // TODO strings en dur répétées => attention les TYPOS
             if (item.Name == "Aged Brie")
             {
-                item.IncreaseQuality();
+                item.DecreaseSellIn();
 
-                if (item.IsExpired())
+                if (item.IsNotExpired())
                 {
-                    item.IncreaseQuality();
+                    item.IncreaseQualityBy(1);
+                }
+                else
+                {
+                    item.IncreaseQualityBy(2);
                 }
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
-                if (item.IsExpired())
+                item.DecreaseSellIn();
+
+                if (item.IsNotExpired())
                 {
-                    item.SetQualityToLowest();
+                    if (item.WillExpireIn(5))
+                    {
+                        item.IncreaseQualityBy(3);
+                    }
+                    else if (item.WillExpireIn(10))
+                    {
+                        item.IncreaseQualityBy(2);
+                    }
+                    else
+                    {
+                        item.IncreaseQualityBy(1);
+                    }
                 }
                 else
                 {
-                    item.IncreaseQuality();
-
-                    if (item.WillExpireIn(10))
-                    {
-                        item.IncreaseQuality();
-                    }
-
-                    if (item.WillExpireIn(5))
-                    {
-                        item.IncreaseQuality();
-                    }
+                    item.SetQualityToLowest();
                 }
             }
             else if (item.Name == "Sulfuras, Hand of Ragnaros")
@@ -57,11 +59,16 @@ public class GildedRose
             }
             else
             {
-                item.DecreaseQuality();
+                item.DecreaseSellIn();
 
-                if (item.IsExpired())
+
+                if (item.IsNotExpired())
                 {
-                    item.DecreaseQuality();
+                    item.DecreaseQualityBy(1);
+                }
+                else
+                {
+                    item.DecreaseQualityBy(2);
                 }
             }
         }
