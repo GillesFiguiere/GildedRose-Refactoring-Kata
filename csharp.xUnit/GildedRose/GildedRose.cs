@@ -13,26 +13,20 @@ public class GildedRose
 
     public void UpdateQuality()
     {
-        // TODO On ne voit pas les règles métiers 
-        // exemple si c'es agedbrie je fais ça, si c'est Sulfuras, etc.
         foreach (var item in Items)
         {
             if (item.Name != "Sulfuras, Hand of Ragnaros")
             {
-                item.SellIn = item.SellIn - 1;
+                item.SellIn--;
             }
 
             // TODO strings en dur répétées => attention les TYPOS
             if (item.Name == "Aged Brie")
             {
-                if (item.Quality < 50)
+                item.IncreaseQuality();
+                if (item.SellIn < 0)
                 {
-                    item.Quality = item.Quality + 1;
-                    if (item.SellIn < 0)
-                    {
-                        // Duplication incrémentation
-                        item.Quality = item.Quality + 1;
-                    }
+                    item.IncreaseQuality();
                 }
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
@@ -42,21 +36,19 @@ public class GildedRose
                     item.Quality = 0;
                 }
 
-                else if (item.Quality < 50)
+                else
                 {
-                    // Duplication incrémentation
-                    item.Quality = item.Quality + 1;
+                    item.IncreaseQuality();
 
 
-                    // Duplication quality < 50
-                    if (item.SellIn < 10 && item.Quality < 50)
+                    if (item.SellIn < 10)
                     {
-                        item.Quality = item.Quality + 1;
+                        item.IncreaseQuality();
                     }
 
-                    if (item.SellIn < 5 && item.Quality < 50)
+                    if (item.SellIn < 5)
                     {
-                        item.Quality = item.Quality + 1;
+                        item.IncreaseQuality();
                     }
                 }
             }
@@ -66,19 +58,11 @@ public class GildedRose
             }
             else
             {
-                // Duplication quality > 0
-                if (item.Quality > 0)
-                {
-                    // Duplication décrémentation
-                    item.Quality = item.Quality - 1;
-                }
+                item.DecreaseQuality();
 
                 if (item.SellIn < 0)
                 {
-                    if (item.Quality > 0)
-                    {
-                        item.Quality = item.Quality - 1;
-                    }
+                    item.DecreaseQuality();
                 }
             }
         }
