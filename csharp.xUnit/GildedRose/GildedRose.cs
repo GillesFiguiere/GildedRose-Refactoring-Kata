@@ -17,7 +17,6 @@ public class GildedRose
         // exemple si c'es agedbrie je fais ça, si c'est Sulfuras, etc.
         foreach (var item in Items)
         {
-
             if (item.Name != "Sulfuras, Hand of Ragnaros")
             {
                 item.SellIn = item.SellIn - 1;
@@ -26,17 +25,13 @@ public class GildedRose
             // TODO strings en dur répétées => attention les TYPOS
             if (item.Name == "Aged Brie")
             {
-
-
                 if (item.Quality < 50)
                 {
                     item.Quality = item.Quality + 1;
-                    if (item.SellIn <0)
+                    if (item.SellIn < 0)
                     {
-
                         // Duplication incrémentation
                         item.Quality = item.Quality + 1;
-
                     }
                 }
             }
@@ -63,21 +58,21 @@ public class GildedRose
                     {
                         item.Quality = item.Quality + 1;
                     }
-
-
-
                 }
             }
-            else if (item.Name != "Sulfuras, Hand of Ragnaros")
+            else if (item.Name == "Sulfuras, Hand of Ragnaros")
+            {
+                // Sulfuras ne change jamais
+            }
+            else
             {
                 // Duplication quality > 0
-
-
                 if (item.Quality > 0)
                 {
                     // Duplication décrémentation
                     item.Quality = item.Quality - 1;
                 }
+
                 if (item.SellIn < 0)
                 {
                     if (item.Quality > 0)
@@ -85,12 +80,7 @@ public class GildedRose
                         item.Quality = item.Quality - 1;
                     }
                 }
-
             }
-
-
-
-
         }
     }
 }
