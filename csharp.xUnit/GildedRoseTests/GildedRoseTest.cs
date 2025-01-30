@@ -17,11 +17,14 @@ public class GildedRoseTest
         { new BackstagePasses(-1, 3), -2, 0 },
         { new DexterityVest(-1, 3), -2, 1 },
         { new AgedBrie(-1, 3), -2, 5 },
+        { new ConjuredManaCake(1, 2), 0, 0 },
+        { new ConjuredManaCake(0, 4), -1, 0 },
+        { new ConjuredManaCake(1, 1), 0, 0 },
     };
 
     [Theory]
     [MemberData(nameof(CasDeTest))]
-    public void ShouldUpdateQualityForDexterityVest(AbstractItem abstractItem, int sellInExpected, int qualityExpected)
+    public void ShouldUpdateItems(AbstractItem abstractItem, int sellInExpected, int qualityExpected)
     {
         List<AbstractItem> items = [abstractItem];
         GildedRose app = new(items);

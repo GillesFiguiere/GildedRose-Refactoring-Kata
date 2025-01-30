@@ -7,7 +7,7 @@ public abstract class AbstractItem(int sellIn, int quality)
 
     public abstract string Name { get; }
 
-    public int SellIn { get; private set; } = sellIn;
+    public int SellIn { get; private set; } = sellIn > 0 ? sellIn : 0;
 
     public int Quality { get; private set; } = quality;
 
@@ -37,7 +37,7 @@ public abstract class AbstractItem(int sellIn, int quality)
         }
     }
 
-    private void DecreaseQualityBy(int decrement)
+    protected void DecreaseQualityBy(int decrement)
     {
         if (Quality - decrement >= MinQuality)
         {
@@ -54,7 +54,7 @@ public abstract class AbstractItem(int sellIn, int quality)
         Quality = MinQuality;
     }
 
-    private bool IsExpired() => SellIn < 0;
+    protected bool IsExpired() => SellIn < 0;
 
     protected bool IsNotExpired() => !IsExpired();
 
