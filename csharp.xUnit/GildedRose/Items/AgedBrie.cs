@@ -4,10 +4,8 @@ public class AgedBrie(int sellIn, int quality) : AbstractItem(sellIn, quality)
 {
     public override string Name => "Aged Brie";
 
-    public override void Update()
+    protected override void UpdateQuality()
     {
-        DecreaseSellIn();
-
         if (IsNotExpired())
         {
             IncreaseQualityBy(1);

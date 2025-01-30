@@ -4,10 +4,8 @@ public class BackstagePasses(int sellIn, int quality) : AbstractItem(sellIn, qua
 {
     public override string Name => "Backstage passes to a TAFKAL80ETC concert";
 
-    public override void Update()
+    protected override void UpdateQuality()
     {
-        DecreaseSellIn();
-
         if (IsNotExpired())
         {
             if (WillExpireIn(5))

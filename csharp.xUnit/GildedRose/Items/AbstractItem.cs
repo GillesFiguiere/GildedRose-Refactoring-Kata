@@ -7,14 +7,19 @@ public abstract class AbstractItem(int sellIn, int quality)
 
     public abstract string Name { get; }
 
-    public int SellIn { get; private set; } = sellIn > 0 ? sellIn : 0;
+    public int SellIn { get; private set; } = sellIn;
 
     public int Quality { get; private set; } = quality;
 
-    public virtual void Update()
+    public void Update()
     {
         DecreaseSellIn();
 
+        UpdateQuality();
+    }
+
+    protected virtual void UpdateQuality()
+    {
         if (IsNotExpired())
         {
             DecreaseQualityBy(1);
@@ -60,7 +65,7 @@ public abstract class AbstractItem(int sellIn, int quality)
 
     protected bool WillExpireIn(int days) => SellIn < days;
 
-    protected void DecreaseSellIn()
+    protected virtual void DecreaseSellIn()
     {
         SellIn--;
     }

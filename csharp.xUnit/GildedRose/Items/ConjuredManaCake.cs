@@ -4,9 +4,8 @@ public class ConjuredManaCake(int sellIn, int quality) : AbstractItem(sellIn, qu
 {
     public override string Name => "Conjured Mana Cake";
 
-    public override void Update()
+    protected override void UpdateQuality()
     {
-        DecreaseSellIn();
         if (IsExpired())
         {
             DecreaseQualityBy(2);
